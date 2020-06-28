@@ -18,6 +18,14 @@
         <module>application-model-annotator</module>
         <module>application-model-core</module>
     </modules>
+    <properties>
+        <!-- should we include the integration test in this build? -->
+        <itest>true</itest>
+
+        <skipTests>false</skipTests>
+        <testExclusionPattern>**/*KubernetesTest.java</testExclusionPattern>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
@@ -37,8 +45,31 @@
             <groupId>io.sundr</groupId>
             <artifactId>transform-annotations</artifactId>
         </dependency>
-    </dependencies>
 
+        <!-- Test dependencies -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-migrationsupport</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.javacrumbs.json-unit</groupId>
+            <artifactId>json-unit-fluent</artifactId>
+            <version>2.7.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.10</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
     <build>
         <pluginManagement>
@@ -79,6 +110,36 @@
         </pluginManagement>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <index>true</index>
+                        <manifest>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                        </manifest>
+                        <manifestEntries>
+                            <Implementation-URL>${project.url}</Implementation-URL>
+                            <Java-Version>${java.version}</Java-Version>
+                            <Java-Vendor>${java.vendor}</Java-Vendor>
+                            <Os-Name>${os.name}</Os-Name>
+                            <Os-Arch>${os.arch}</Os-Arch>
+                            <Os-Version>${os.version}</Os-Version>
+                            <Scm-Url>${project.scm.url}</Scm-Url>
+                            <Scm-Connection>${project.scm.connection}</Scm-Connection>
+                            <Scm-Revision>${buildNumber}</Scm-Revision>
+                            <Build-Timestamp>${build.datetime}</Build-Timestamp>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+            <!-- Set properties containing the scm revision and build timestamp -->
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>buildnumber-maven-plugin</artifactId>
                 <version>${buildnumber.plugin.version}</version>
@@ -110,6 +171,29 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <nonFilteredFileExtensions>
+                        <nonFilteredFileExtension>zip</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>gz</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>jar</nonFilteredFileExtension>
+                    </nonFilteredFileExtensions>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <inherited>true</inherited>
+                <configuration>
+                    <skipTests>${skipTests}</skipTests>
+                    <excludes>
+                        <exclude>${testExclusionPattern}</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
 </project>
