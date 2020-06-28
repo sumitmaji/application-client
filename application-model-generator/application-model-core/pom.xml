@@ -86,9 +86,9 @@
                             com.sum.application.api.model**,
                         </Export-Package>
                         <Include-Resource>
-                            {maven-resources},
-                            /META-INF/jandex.idx=target/classes/META-INF/jandex.idx,
-                            /core.properties=target/classes/core.properties,
+                            {maven-resources}
+<!--                            /META-INF/jandex.idx=target/classes/META-INF/jandex.idx,-->
+<!--                            /core.properties=target/classes/core.properties,-->
                         </Include-Resource>
                     </instructions>
                 </configuration>
