@@ -16,10 +16,47 @@
         <module>application-model</module>
         <module>application-model-common</module>
         <module>application-model-annotator</module>
+        <module>application-model-core</module>
     </modules>
 
 
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.jsonschema2pojo</groupId>
+                    <artifactId>jsonschema2pojo-maven-plugin</artifactId>
+                    <version>${jsonschema2pojo.version}</version>
+                    <configuration>
+                        <customAnnotator>com.sum.application.annotator.KubernetesTypeAnnotator</customAnnotator>
+                        <sourcePaths>
+                            <sourcePath>${project.basedir}/src/main/resources/schema/kube-schema.json</sourcePath>
+                        </sourcePaths>
+                        <targetPackage>com.sum.application.api.model</targetPackage>
+                        <includeConstructors>true</includeConstructors>
+                        <includeJsr303Annotations>false</includeJsr303Annotations>
+                        <includeToString>false</includeToString>
+                        <includeHashcodeAndEquals>false</includeHashcodeAndEquals>
+                        <outputDirectory>${project.build.directory}/generated-sources</outputDirectory>
+                        <annotationStyle>none</annotationStyle>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>generate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.sum</groupId>
+                            <artifactId>application-model-annotator</artifactId>
+                            <version>${project.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
