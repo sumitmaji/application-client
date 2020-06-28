@@ -10,7 +10,7 @@ import com.sum.application.api.model.ApplicationResource;
 import com.sum.application.model.annotation.ApiGroup;
 import com.sum.application.model.annotation.ApiVersion;
 import com.sum.application.model.util.Helper;
-import com.sum.application.api.model.ApplicationListBuilder;
+//import com.sum.application.api.model.ApplicationListBuilder;
 
 import java.io.IOException;
 import java.util.*;
@@ -48,7 +48,8 @@ public class ApplicationDeserializer extends JsonDeserializer<ApplicationResourc
                 ApplicationResource resource = fromObjectNode(jp, jsonNode);
             }
         }
-        return new ApplicationListBuilder().withItems(new ArrayList<>()).build();
+//        return new ApplicationListBuilder().withItems(new ArrayList<>()).build();
+        return null;
     }
 
     private static ApplicationResource fromObjectNode(JsonParser jp, JsonNode node) throws IOException {
