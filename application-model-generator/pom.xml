@@ -18,6 +18,26 @@
         <module>application-model-annotator</module>
         <module>application-model-core</module>
     </modules>
+    <dependencies>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-jaxb-annotations</artifactId>
+        </dependency>
+
+        <!-- CompileOnly (provided) depdendencies -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.sundr</groupId>
+            <artifactId>builder-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.sundr</groupId>
+            <artifactId>transform-annotations</artifactId>
+        </dependency>
+    </dependencies>
 
 
     <build>
@@ -28,9 +48,9 @@
                     <artifactId>jsonschema2pojo-maven-plugin</artifactId>
                     <version>${jsonschema2pojo.version}</version>
                     <configuration>
-                        <customAnnotator>com.sum.application.annotator.KubernetesTypeAnnotator</customAnnotator>
+                        <customAnnotator>com.sum.application.annotator.ApplicationTypeAnnotator</customAnnotator>
                         <sourcePaths>
-                            <sourcePath>${project.basedir}/src/main/resources/schema/kube-schema.json</sourcePath>
+                            <sourcePath>${project.basedir}/src/main/resources/schema/app-schema.json</sourcePath>
                         </sourcePaths>
                         <targetPackage>com.sum.application.api.model</targetPackage>
                         <includeConstructors>true</includeConstructors>

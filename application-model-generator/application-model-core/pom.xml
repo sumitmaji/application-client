@@ -43,19 +43,19 @@
                             <target>
                                 <echo>removing the duplicate generated class</echo>
                                 <delete
-                                        file="${project.build.directory}/generated-sources/io/fabric8/kubernetes/api/model/Duration.java"
+                                        file="${project.build.directory}/generated-sources/com/sum/application/api/model/Duration.java"
                                         verbose="true" />
                                 <delete
-                                        file="${project.build.directory}/generated-sources/io/fabric8/kubernetes/api/model/HasMetadata.java"
+                                        file="${project.build.directory}/generated-sources/com/sum/application/api/model/HasMetadata.java"
                                         verbose="true" />
                                 <delete
-                                        file="${project.build.directory}/generated-sources/io/fabric8/kubernetes/api/model/IntOrString.java"
+                                        file="${project.build.directory}/generated-sources/com/sum/application/api/model/IntOrString.java"
                                         verbose="true" />
                                 <delete
-                                        file="${project.build.directory}/generated-sources/io/fabric8/kubernetes/api/model/Quantity.java"
+                                        file="${project.build.directory}/generated-sources/com/sum/application/api/model/Quantity.java"
                                         verbose="true" />
                                 <delete
-                                        file="${project.build.directory}/generated-sources/io/fabric8/kubernetes/api/model/WatchEvent.java"
+                                        file="${project.build.directory}/generated-sources/com/sum/application/api/model/WatchEvent.java"
                                         verbose="true" />
                                 <delete verbose="true">
                                     <fileset dir="${project.build.directory}/generated-sources">
@@ -107,7 +107,7 @@
                         <configuration>
                             <artifacts>
                                 <artifact>
-                                    <file>${project.build.outputDirectory}/schema/kube-schema.json</file>
+                                    <file>${project.build.outputDirectory}/schema/app-schema.json</file>
                                     <type>json</type>
                                     <classifier>schema</classifier>
                                 </artifact>
