@@ -15,6 +15,7 @@
  */
 package com.sum.application.annotator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.JsonDeserializer;
@@ -28,6 +29,7 @@ import io.sundr.builder.annotations.Buildable;
 import io.sundr.builder.annotations.Inline;
 import io.sundr.transform.annotations.VelocityTransformation;
 import io.sundr.transform.annotations.VelocityTransformations;
+import jakarta.persistence.Entity;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.jsonschema2pojo.Jackson2Annotator;
@@ -67,6 +69,9 @@ public class ApplicationCoreTypeAnnotator extends Jackson2Annotator {
       .param("using", JsonDeserializer.None.class);
     clazz.annotate(ToString.class);
     clazz.annotate(EqualsAndHashCode.class);
+    if(clazz.fields().containsKey("entity")){
+      clazz.annotate(Entity.class);
+    }
     processBuildable(clazz);
 
     if (clazz.fields().containsKey(KIND) && clazz.fields().containsKey(METADATA)) {
@@ -115,6 +120,10 @@ public class ApplicationCoreTypeAnnotator extends Jackson2Annotator {
   @Override
   public void propertyField(JFieldVar field, JDefinedClass clazz, String propertyName, JsonNode propertyNode) {
     super.propertyField(field, clazz, propertyName, propertyNode);
+
+    if(propertyNode.has("jsonIgnore")){
+      field.annotate(JsonIgnore.class);
+    }
 
     if (propertyNode.has("javaOmitEmpty") && propertyNode.get("javaOmitEmpty").asBoolean(false)) {
       field.annotate(JsonInclude.class).param(ANNOTATION_VALUE, JsonInclude.Include.NON_EMPTY);
