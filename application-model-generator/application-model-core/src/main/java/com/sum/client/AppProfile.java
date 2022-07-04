@@ -23,15 +23,6 @@ public class AppProfile {
     @Column(name = "name")
     private String name;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-
     @PostLoad
     public void postRemove() {
 
