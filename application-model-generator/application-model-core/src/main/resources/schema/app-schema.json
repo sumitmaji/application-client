@@ -6,8 +6,12 @@
       "application_apimachinery_pkg_apis_Address": {
         "type": "object",
         "properties": {
+          "entity": {
+            "jsonIgnore": true
+          },
           "post-office-box": {
-            "type": "string"
+            "type": "string",
+            "javaName": "PostOffice"
           },
           "extended-address": {
             "type": "string"
@@ -26,6 +30,11 @@
           },
           "country-name": {
             "type": "string"
+          },
+          "age": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 20
           }
         },
         "required": [ "locality", "region", "country-name" ],
